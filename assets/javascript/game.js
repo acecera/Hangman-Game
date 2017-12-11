@@ -1,9 +1,10 @@
-var words = ['liar liar', 'Yes Man', 'Dumb and Dumber', 'The Mask', 
-'Ace Ventura', 'Batman Forever'];
-var dashWords = [_ _ _ _, ]
+var words = ['burton', 'lib-tech', 'capita', 'ride', 
+'arbor', 'gnu'];
+var dashWords = [('_', '_', '_', '_', '_', '_'), ('_','_','_', '_','_','_','_'), 
+('_','_','_','_','_','_'), ('_','_','_','_'), ('_','_','_','_','_'), ('_','_','_')];
 var wins = 0;
-var guessesRemaining = 0;
-var lettersGuessed = 0;
+//var guessesRemainingElement = document.getElementById("guessesRemaining");
+var lettersGuessed = [];
 var winsElement = document.getElementById("words-guessed-correctly");
 
 var chooseWord = words[Math.floor(Math.random() * words.length)];
@@ -13,15 +14,21 @@ var chooseWordArray = chooseWord.split("");
 document.onkeyup = function (event) {
     var userGuess = event.key;   
     //console.log(userGuess);      
-    for (var i = 0; i < chooseWordArray.length; i++){
-       if(chooseWordArray[i] === userGuess) {
+    for (var i = 0; i < chooseWordArray.length; i++) {
+       if (chooseWordArray.includes(userGuess)) {
            console.log(userGuess);
-           dashes[i] = userGuess;
-       }else if(chooseWordArray[i] !== userGuess) {
-           console.log("Wrong!");
+       } 
+    }  
+}       
+       
+       /*else {
+           console.log("Wrong Letter" + userGuess);
        }
+    } /*for (winsElement {
+        if (dashWords[i] < chooseWordArray[i]) {
+           console.log(winsElement++); 
+        }
     }
 
 
-
-}
+*/
