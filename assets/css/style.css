@@ -1,0 +1,18 @@
+body {
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 60px;
+    color: rgb(68, 255, 10);
+    background: url("../images/snowboarding_seamless.png");
+}
+
+.container{
+    width: 90%;
+    max-width: 960px;
+    margin-top: 50px;
+    margin-left: 30px;
+    margin-right: 30px;
+    clear: both;
+    position: absolute;
+    background: white;
+    text-align: center;
+}
