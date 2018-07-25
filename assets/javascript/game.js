@@ -42,7 +42,7 @@ var hangmanGame = {
     guessedLetters: [],
     guessesLeft: 0,
     totalGuesses: 0,
-    letterChosen: null, 
+    letterGuessed: null, 
     win: 0,
 
     startGame: function() {
@@ -67,11 +67,11 @@ var hangmanGame = {
     },
 
     updateGuesses: function(letter) {
-        if ((this.letterChosen.indexOf(letter) === -1) && (this.lettersInWord.indexOf(letter) === -1)) {
-            this.letterChosen.push(letter);
+        if ((this.guessedLetters.indexOf(letter) === -1) && (this.lettersInWord.indexOf(letter) === -1)) {
+            this.guessedLetters.push(letter);
             this.guessesLeft--;
             document.querySelector("#guesses-remaining").innerHTML = this.guessesLeft;
-            document.querySelector("guesses-left").innerHTML = this.letterChosen.join(', ');
+            document.querySelector("guessed-letters").innerHTML = this.guessedLetters.join(', ');
         }
     },
 
@@ -109,7 +109,7 @@ var hangmanGame = {
         this.guessedLetters = [];
         this.guessesLeft = 0;
         this.totalGuesses = 0;
-        this.letterChosen = null;
+        this.letterGuessed = null;
         this.startGame();
         this.rebuildWordChosen();
     },
@@ -142,8 +142,8 @@ var hangmanGame = {
 hangmanGame.startGame();
 
 document.onkeyup = function(event) {
-    hangmanGame.letterChosen = String.fromCharCode(event.keyCode).toLowerCase();
-    hangmanGame.updatePage(hangmanGame.letterChosen);
+    hangmanGame.letterGuessed = String.fromCharCode(event.keyCode).toLowerCase();
+    hangmanGame.updatePage(hangmanGame.letterGuessed);
 };
 
 
