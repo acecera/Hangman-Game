@@ -1,26 +1,41 @@
 <!DOCTYPE html>
 <html lang="en-us">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Hangman-Game</title>
-    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-    <script type="text/javascript" src="assets/javascript/game.js"></script>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <title>Hangman Game</title>
+        <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+        <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    </head>
 
-<body>
-    <div class="container">
-        <h1>Snowboard Hangman-Game!</h1>
-    </div>
-    <div class="name">
-        <span>_</span>
-        <span>_</span>
-        <span>_</span>
-        <span>_</span>
-        <span>_</span>
-        <span>_</span>
-        <span>_</span>
-    </div>
-    <div class="expected-brand"></div>
-</body>
+    <body>
+       <div id="wrapper">
+        <h1 class="title">HANGMAN</h1>
+        <h2 class="subTitle">90's Style!</h2>
+       </div>
+
+       <div id="container">
+        <div id="band-div"><img src="images/.jpg" alt="hangman image"></div>
+        <div id"game-section">
+            <p>Press any key to begin!</p>
+            <div>
+                <h3 class="section-title">Wins</h3>
+                <div id="wins"></div>
+            </div>
+            <div id="current-word-section">
+                <h3 class="section-title">Current Word</h3>
+                <div id="current-word"></div>
+            </div>
+            <div id="guesses-remaining-section">
+                <h3 class="section-title">Number of Guesses Remaining</h3>
+                <div id="guesses-remaining"></div>
+            </div>
+            <div id="guesses-letters-section">
+                <h3 class="section-title">Letters Already Guessed</h3>
+                <div id="guessed-letters"></div>
+            </div>
+        </div>
+       </div>
+        <script type="text/javascript" src="assets/javascript/game.js"></script>
+    </body>
+</html>
