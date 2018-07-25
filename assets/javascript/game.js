@@ -31,8 +31,8 @@ var hangmanGame = {
         tupac: {
             picture: "tupac.jpg"
         },
-        cardigans: {
-            picture: "theCardigans.jpg"
+        biggie: {
+            picture: "biggie.jpg"
         }
     },
 
