@@ -1,149 +1,83 @@
-var hangmanGame = {
+var wordsToPick = ["nirvana", "biggie", "blink182", "bush", "eminem", "metallica", 
+"nirvana", "nsync", "pantera", "tupac", "u2", "weezer"];
 
-    wordsToPick: {
-        nirvana: {
-            picture: "nirvana.jpg"
-        },
-        weezer: {
-            picture: "weezer.jpg"
-        },
-        metallica: {
-            picture: "metallica.jpg"
-        },
-        blink182: {
-            picture: "blink182.jpg"
-        },
-        u2: {
-            picture: "u2.jpg"
-        },
-        pantera: {
-            picture: "pantera.jpg"
-        },
-        nsync: {
-            picture: "nsync.jpg"
-        },
-        bush: {
-            picture: "bush.jpg"
-        },
-        eminem: {
-            picture: "eminem.jpg"
-        },
-        tupac: {
-            picture: "tupac.jpg"
-        },
-        biggie: {
-            picture: "biggie.jpg"
-        }
-    },
+var chosenWord = "";
+var lettersInWord = [];
+var numBlanks = 0;
+var blanksAndSuccesses = [];
+var wrongGuesses = [];
 
-    wordInPlay: null, 
-    lettersInWord: [], 
-    matchedLetters: [], 
-    guessedLetters: [],
-    guessesLeft: 0,
-    totalGuesses: 0,
-    letterGuessed: null, 
-    win: 0,
+var winCounter = 0;
+var lossCounter = 0;
+var numGuesses = 9;
 
-    startGame: function() {
-        var objKeys = Object.keys(this.wordsToPick);
-        this.wordInPlay = objKeys[Math.floor(Math.random() * objKeys.length)];
-        this.lettersInWord = this.wordsInPlay.split("");
-        this.rebuildWordChosen();
-        this.processUpdateTotalGuesses();
-    },
+function startGame() {
+    numGuesses = 9;
+    chosenWord = wordsToPick[Math.floor(Math.random() * wordsToPick.length)];
+    lettersInWord = chosenWord.split(' ');
+    numBlanks = lettersInWord.length;
+    console.log(chosenWord);
+    blanksAndSuccesses = [];
+    wrongGuesses = [];
 
-    updatePage: function(letter) {
-        if (this.guessesLeft === 0) {
-            this.restartGame();
-        } else {
-            this.updateGuesses(letter);
-            this.updateMatchedLetters(letter);
-            this.rebuildWordChosen();
-            if (this.updateWins() === true) {
-                this.restartGame();
-            }
-        }
-    },
-
-    updateGuesses: function(letter) {
-        if ((this.guessedLetters.indexOf(letter) === -1) && (this.lettersInWord.indexOf(letter) === -1)) {
-            this.guessedLetters.push(letter);
-            this.guessesLeft--;
-            document.querySelector("#guesses-remaining").innerHTML = this.guessesLeft;
-            document.querySelector("guessed-letters").innerHTML = this.guessedLetters.join(', ');
-        }
-    },
-
-    processUpdateTotalGuesses: function() {
-        this.totalGuesses = this.lettersInWord.length + 5;
-        this.guessesLeft = this.totalGuesses;
-        document.querySelector("#guesses-remaining").innerHTML = this.guessesLeft;
-    },
-
-    updateMatchedLetters: function(letter) {
-        for (var i = 0; i < this.lettersInWord.length; i++) {
-            if ((letter === this.lettersInWord[i]) && (this.matchedLetters.indexOf(letter) === -1)) {
-                this.matchedLetters.push(letter);
-            }
-        }
-    },
-
-    rebuildWordChosen: function() {
-        var wordChosen = "";
-        for (var i = 0; i < this.lettersInWord.length; i++) {
-            if (this.matchedLetters.indexOf(this.lettersInWord[i]) !== -1) {
-                wordChosen += this.lettersInWord[i];
-            } else {
-                wordChosen += "&nbsp;_&nbsp;";
-            }
-        }
-        document.querySelector("#current-word").innerHTML = wordChosen;
-    },
-
-    restartGame: function() {
-        document.querySelector("#guesses-letters").innerHTML = "";
-        this.wordInPlay = null; 
-        this.lettersInWord = [];
-        this.matchedLetters = [];
-        this.guessedLetters = [];
-        this.guessesLeft = 0;
-        this.totalGuesses = 0;
-        this.letterGuessed = null;
-        this.startGame();
-        this.rebuildWordChosen();
-    },
-
-    updateWins: function() {
-        var win;
-        if (this.matchedLetters.length === 0) {
-            win = false;
-        } else {
-            win = true;
-        }
-
-        for (var i = 0; i < this.lettersInWord.length; i++) {
-            if (this.matchedLetters.indexOf(this.lettersInWord[i]) === -1) {
-                win = false;
-            }
-        }
-
-        if (win) {
-            this.wins = this.wins + 1;
-            document.querySelector("#wins").innerHTML = this.wins;
-            document.querySelector("#bandDiv").innerHTML = 
-             "<img class='band-image' src='images/" + this.wordsToPick[this.wordInPlay].picture + "'>";
-            return true;
-        }
-        return false;
+    for (var i = 0; i < numBlanks; i++) {
+        blanksAndSuccesses.push("_");
     }
-};
 
-hangmanGame.startGame();
+    console.log(blanksAndSuccesses);
+
+    document.getElementById("guesses-left").innerHTML = numGuesses;
+    document.getElementById("word-blanks").innerHTML = blanksAndSuccesses.join(" ");
+    document.getElementById("wrong-guesses").innerHTML = wrongGuesses.join(" ");
+}
+
+function checkLetters(letter) {
+    var letterInWord = false;
+
+    for (var i = 0; i < numBlanks; i++) {
+        if (chosenWord[i] === letter) {
+            letterInWord = true;
+        }
+    }
+
+    if (letterInWord) {
+        for (var j = 0; j < numBlanks; i++) {
+            if (chosenWord[j] === letter) {
+                blanksAndSuccesses[j] = letter;
+            }
+        }
+        console.log(blanksAndSuccesses);
+    } else {
+        wrongGuesses.push(letter);
+        numGuesses--;
+    }
+}
+
+function gameOver() {
+    console.log("WinCount: " + winCounter + " | LossCount: " + lossCounter + " | NumGuesses: " + numGuesses);
+    document.getElementById("guesses-left").innerHTML = numGuesses;
+    document.getElementById("word-blanks").innerHTML = blanksAndSuccesses.join(" ");
+    document.getElementById("wrong-guesses").innerHTML = wrongGuesses.join(" ");
+
+    if (lettersInWord.toString() === blanksAndSuccesses.toString()) {
+        winCounter++;
+        alert("You Win!")
+        document.getElementById("win-counter").innerHTML = winCounter;
+        startGame();
+    } else if (numGuesses === 0) { 
+        lossCounter++;
+        alert("You lose :(");
+        document.getElementById("loss-counter").innerHTML = lossCounter;
+        startGame();
+    } 
+}
+
+// startGame();
 
 document.onkeyup = function(event) {
-    hangmanGame.letterGuessed = String.fromCharCode(event.keyCode).toLowerCase();
-    hangmanGame.updatePage(hangmanGame.letterGuessed);
+    var letterGuessed = String.fromCharCode(event.keyCode).toLowerCase();
+   checkLetters(letterGuessed);
+   gameOver();
 };
 
 
